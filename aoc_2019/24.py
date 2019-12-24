@@ -8,3 +8,10 @@ Maybe need some bit operation: 25-bit number
 
 This way, it's easy to check if two layours are the same
 """
+
+def main():
+    print("Hello")
+
+
+if __name__ == "__main__":
+    main()
