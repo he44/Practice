@@ -55,7 +55,7 @@ def update_grid(grid):
             
 #  Visualize the grid
 def visual_grid(grid):
-    print('+++++++++++++++++++++++++++')
+    # print('+++++++++++++++++++++++++++')
     for row in grid:
         print(row)
     #  print(grid_to_num(grid))
@@ -90,11 +90,21 @@ def sum_all(grids):
 #  Update all grids
 #  prev_grids: a dictionary of all the possible grids
 def update_all_grids(prev_grids, minutes, current_minute):
-    updated_grids = prev_grids
+    """
+    print("Before: -------------------------------------------------------")
+    for i in prev_grids:
+        visual_grid(prev_grids[i])
+    """
+    
+    #  declare the new grids, all changes should only occur on updated_grids
+    #  make sure it's copied, instead of just reference
+    updated_grids = prev_grids.copy()
     #  for current_minute, only 2 * current_minute + 1 grids need to be udpated
+    print(minutes, current_minute)
+    print(range(minutes - current_minute, minutes + current_minute + 1))
     for i in range(minutes - current_minute, minutes + current_minute + 1):
-        #  basic counting
         counts = [[0 for x in range(5)] for y in range(5)]
+        #  basic counting, in this current level
         for r in range(5):
             for c in range(5):
                 counts[r][c] = count_in_adjacent_tiles(prev_grids[i], r, c)
@@ -106,6 +116,11 @@ def update_all_grids(prev_grids, minutes, current_minute):
             for r in range(5):
                 counts[r][0] += prev_grids[i-1][2][1]
                 counts[r][4] += prev_grids[i-1][2][3]
+        """
+        if i == 2:
+            print('At minute %d, count of level %d, aka i=%d'%(current_minute, i-minutes, i))
+            visual_grid(counts)
+        """
         #  4 cells depend on the grid (level i + 1), in the problem notation, 8,12,14,18
         if i + 1 < minutes + current_minute + 1:
             counts[1][2] += sum_row(prev_grids[i+1], 0)
@@ -113,6 +128,11 @@ def update_all_grids(prev_grids, minutes, current_minute):
             counts[3][2] += sum_row(prev_grids[i+1], 4)
             counts[2][3] += sum_col(prev_grids[i+1], 4)
         #  update
+        """
+        if i == 2:
+            print('At minute %d, count of level %d, aka i=%d'%(current_minute, i-minutes, i))
+            visual_grid(counts)
+        """
         for r in range(5):
             for c in range(5):
                 if prev_grids[i][r][c] == 1 and counts[r][c] != 1:
@@ -123,7 +143,9 @@ def update_all_grids(prev_grids, minutes, current_minute):
                     updated_grids[i][r][c] = 1
                 else:
                     updated_grids[i][r][c] = prev_grids[i][r][c]
+        #  ensure the middle one is always 0 ?
         updated_grids[i][2][2] = 0
+    return updated_grids
         
 
 
@@ -136,8 +158,7 @@ def main():
     update_all_grids(all_grids, 200, 200)
     exit()
     """
-    
-    minutes = 10
+    minutes = 1
     all_grids = {}
     #  create an empty directory
     for i in range(2 * minutes + 1):
@@ -147,13 +168,15 @@ def main():
     input_grid = read_input('eg_input.txt')
     all_grids[minutes] = input_grid
     print("Initially, there are %d bugs"%sum_all(all_grids))
+    for i in all_grids:
+        visual_grid(all_grids[i])
 
     #  Do the iteration
     #  for minute = k, only change from all_grids[200-k] to all_grids[200+k]
-    prev_grids = all_grids
+    prev_grids = all_grids.copy()
     for m in range(1, minutes+1):
         new_grids = update_all_grids(prev_grids, minutes, m)
-        prev_girds = new_grids
+        prev_girds = new_grids.copy()
         m_sum = sum_all(prev_grids)
         print("After %d minutes, total number of bugs is %d"%(m, m_sum))
 
@@ -162,9 +185,10 @@ def main():
     print("Total number of bugs is %d"%total_bug)
 
     print(len(prev_grids))
-    exit()
+    #  exit()
     #  visualizing
     for i in prev_grids:
+        print('Level %d:'%(i-minutes))
         visual_grid(prev_grids[i])
 
 
