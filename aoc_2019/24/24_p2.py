@@ -82,8 +82,8 @@ Initializaton:
 1.) there should be at most 2 * minutes + 1 levels that get activated
 2.) level 0: the input file
 """
-input_file = 'eg_input.txt'
-minutes = 10
+input_file = '24_input.txt'
+minutes = 200
 levels = {}
 for key in range(-minutes, minutes+1):
     levels[key]  = Grid(val=0)
@@ -120,11 +120,18 @@ for cur_m in range(1, minutes+1):
             counts[level][2][1] += levels[level+1].sum_col(0)
             counts[level][2][3] += levels[level+1].sum_col(4)
             #counts[level][1][2] += levels[level+1]
+        """
+        if cur_m == 2 and level == 2:
+            print(levels[level-1])
+            print("counts for level %d"%level)
+            print(counts[level])
+        """
     #  Phase 2: updating all based on counts
     for level in range(-cur_m, cur_m + 1):
         for r in range(const_dim):
             for c in range(const_dim):
                 levels[level].update(counts[level])
+        levels[level].set_val(2,2,0)
         
         
 
