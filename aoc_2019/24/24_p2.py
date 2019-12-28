@@ -39,6 +39,16 @@ class Grid:
             total += sum(row)
         return total
 
+    def sum_row(self, r):
+        total = 0
+        return sum(self.grid[r])
+
+    def sum_col(self, c):
+        total = 0
+        for r in range(const_dim):
+            total += self.grid[r][c]
+        return total
+
     def update(self, counts):
         for r in range(const_dim):
             for c in range(const_dim):
@@ -73,12 +83,11 @@ Initializaton:
 2.) level 0: the input file
 """
 input_file = 'eg_input.txt'
-minutes = 1
+minutes = 10
 levels = {}
 for key in range(-minutes, minutes+1):
     levels[key]  = Grid(val=0)
 levels[0] = Grid(input_file)
-
 
 """
 Updating
@@ -93,13 +102,24 @@ for cur_m in range(1, minutes+1):
         #  updating counts[pos_lev]
         #  basic counts (within each level)
         counts[level] = levels[level].count_within()
-        print(counts[level])
+        #print(counts[level])
         #  add the counts from level - 1 (the level that contains this one)
         #  outer gets affected
-        # @something
+        if level - 1 >= -cur_m:
+            for r in range(const_dim):
+                counts[level][r][0] += levels[level-1].get_val(2, 1)
+                counts[level][r][4] += levels[level-1].get_val(2, 3)
+            for c in range(const_dim):
+                counts[level][0][c] += levels[level-1].get_val(1, 2)
+                counts[level][4][c] += levels[level-1].get_val(3, 2)
         #  add the counts from level + 1 (the level that's within this one)
         #  only four cells get affected
-        # @something
+        if level + 1 < cur_m + 1:
+            counts[level][1][2] += levels[level+1].sum_row(0)
+            counts[level][3][2] += levels[level+1].sum_row(4)
+            counts[level][2][1] += levels[level+1].sum_col(0)
+            counts[level][2][3] += levels[level+1].sum_col(4)
+            #counts[level][1][2] += levels[level+1]
     #  Phase 2: updating all based on counts
     for level in range(-cur_m, cur_m + 1):
         for r in range(const_dim):
