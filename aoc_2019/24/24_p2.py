@@ -1,196 +1,123 @@
-#  Return the 2-D list
-def read_input(file_path):
-    grid = [ [ 0 for i in range(5)] for j in range(5)]
-    with open(file_path, 'r') as fp:
-        lines = fp.readlines()
-    for i in range(len(lines)):
-        line = lines[i].strip()
-        for j in range(len(line)):
-            if line[j] == '#':
-                grid[i][j] = 1
-            else:
-                grid[i][j] = 0
-    return grid
+import copy
+
+const_dim = 5
+
+class Grid:
+    def __init__(self, file_name='eg_input.txt', val=None):
+        if val != None:
+            self.grid = [[val for r in range(const_dim)] for c in range(const_dim)]
+        else:
+            self.grid = [[val for r in range(const_dim)] for c in range(const_dim)]
+            with open(file_name, 'r') as f_csv:
+                lines = f_csv.readlines()
+                for r in range(const_dim):
+                    line = lines[r].strip()
+                    for c in range(const_dim):
+                        if line[c] == '#':
+                            self.grid[r][c] = 1
+                        else:
+                            self.grid[r][c] = 0
+
+    def __repr__(self):
+        string = ''
+        for row in self.grid:
+            string += str(row) + '\n'
+        return string[:-1]
+
+    def set_val(self, r, c, val):
+        self.grid[r][c] = val
+
+    def get_val(self, r, c):
+        return self.grid[r][c]
+
+    def get_grid(self):
+        return self.grid
+
+    def sum_all(self):
+        total = 0
+        for row in self.grid:
+            total += sum(row)
+        return total
+
+    def update(self, counts):
+        for r in range(const_dim):
+            for c in range(const_dim):
+                if self.grid[r][c] == 1 and counts[r][c] != 1:
+                    self.grid[r][c] = 0
+                elif self.grid[r][c] == 0 and counts[r][c] in (1,2):
+                    self.grid[r][c] = 1
+
+    def count_within(self):
+        count = [[0 for x in range(const_dim)] for y in range(const_dim)]
+        for r in range(const_dim):
+            for c in range(const_dim):
+                #  top neighbor
+                if r - 1 >= 0:
+                    count[r][c] += int(self.grid[r-1][c] == 1)
+                #  left neighbor
+                if c - 1 >= 0:
+                    count[r][c] += int(self.grid[r][c-1] == 1)
+                #  bottom neighbor
+                if r + 1 < const_dim:
+                    count[r][c] += int(self.grid[r+1][c] == 1)
+                #  right neighbor
+                if c + 1 < const_dim:
+                    count[r][c] += int(self.grid[r][c+1] == 1)
+        return count
         
-#  Convert grid to a number
-#  following the definition of biodiversity
-def grid_to_num(grid):
-    num = 0
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            power = i * 5 + j 
-            #  print(i, j, power, 2 ** power)
-            if grid[i][j] == 0:
-                continue
-            num += 2 ** (power)
-    return num
+        
 
-#  Count adjacent bugs
-def count_in_adjacent_tiles(grid, i, j):
-    count = 0
-    h = len(grid)
-    w = len(grid[0])
-    #  top neighbor
-    if i - 1 >= 0:
-        count += int(grid[i-1][j] == 1)
-    #  left neighbor
-    if j - 1 >= 0:
-        count += int(grid[i][j-1] == 1)
-    #  right neighbor
-    if j + 1 < w:
-        count += int(grid[i][j+1] == 1)
-    #  bottom neighbor
-    if i + 1 < h:
-        count += int(grid[i+1][j] == 1)
-    return count
-    
-
-#  Update the grid
-def update_grid(grid):
-    new_grid = [ [ 0 for i in range(5)] for j in range(5)]
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            pass
-    return new_grid
-            
-#  Visualize the grid
-def visual_grid(grid):
-    # print('+++++++++++++++++++++++++++')
-    for row in grid:
-        print(row)
-    #  print(grid_to_num(grid))
-    print('+++++++++++++++++++++++++++')
-
-#  Sum up the number of bugs in one grid
-def sum_grid(grid):
-    sum_g = 0
-    for row in grid:
-        sum_g += sum(row)
-    return sum_g
-
-def sum_col(grid, c):
-    total = 0
-    for r in range(5):
-        total += grid[r][c]
-    return total
-
-def sum_row(grid, r):
-    total = 0
-    for c in range(5):
-        total += grid[r][c]
-    return total
-
-def sum_all(grids):
-    total = 0
-    for i in grids:
-        total += sum_grid(grids[i])
-    return total
+"""
+Initializaton:
+1.) there should be at most 2 * minutes + 1 levels that get activated
+2.) level 0: the input file
+"""
+input_file = 'eg_input.txt'
+minutes = 1
+levels = {}
+for key in range(-minutes, minutes+1):
+    levels[key]  = Grid(val=0)
+levels[0] = Grid(input_file)
 
 
-#  Update all grids
-#  prev_grids: a dictionary of all the possible grids
-def update_all_grids(prev_grids, minutes, current_minute):
-    """
-    print("Before: -------------------------------------------------------")
-    for i in prev_grids:
-        visual_grid(prev_grids[i])
-    """
-    
-    #  declare the new grids, all changes should only occur on updated_grids
-    #  make sure it's copied, instead of just reference
-    updated_grids = prev_grids.copy()
-    #  for current_minute, only 2 * current_minute + 1 grids need to be udpated
-    print(minutes, current_minute)
-    print(range(minutes - current_minute, minutes + current_minute + 1))
-    for i in range(minutes - current_minute, minutes + current_minute + 1):
-        counts = [[0 for x in range(5)] for y in range(5)]
-        #  basic counting, in this current level
-        for r in range(5):
-            for c in range(5):
-                counts[r][c] = count_in_adjacent_tiles(prev_grids[i], r, c)
-        #  all the outer circle (one coord 0 or 4), depends on the grid (level i - 1)
-        if i - 1 >= minutes - current_minute:
-            for c in range(5):
-                counts[0][c] += prev_grids[i-1][1][2]
-                counts[4][c] += prev_grids[i-1][3][2]
-            for r in range(5):
-                counts[r][0] += prev_grids[i-1][2][1]
-                counts[r][4] += prev_grids[i-1][2][3]
-        """
-        if i == 2:
-            print('At minute %d, count of level %d, aka i=%d'%(current_minute, i-minutes, i))
-            visual_grid(counts)
-        """
-        #  4 cells depend on the grid (level i + 1), in the problem notation, 8,12,14,18
-        if i + 1 < minutes + current_minute + 1:
-            counts[1][2] += sum_row(prev_grids[i+1], 0)
-            counts[2][1] += sum_col(prev_grids[i+1], 0)
-            counts[3][2] += sum_row(prev_grids[i+1], 4)
-            counts[2][3] += sum_col(prev_grids[i+1], 4)
-        #  update
-        """
-        if i == 2:
-            print('At minute %d, count of level %d, aka i=%d'%(current_minute, i-minutes, i))
-            visual_grid(counts)
-        """
-        for r in range(5):
-            for c in range(5):
-                if prev_grids[i][r][c] == 1 and counts[r][c] != 1:
-                    updated_grids[i][r][c] = 0
-                #  An empty space becomes infested with a bug
-                #  if exactly one or two bugs are adjacent to it.
-                elif prev_grids[i][r][c] == 0 and counts[r][c] in (1,2):
-                    updated_grids[i][r][c] = 1
-                else:
-                    updated_grids[i][r][c] = prev_grids[i][r][c]
-        #  ensure the middle one is always 0 ?
-        updated_grids[i][2][2] = 0
-    return updated_grids
+"""
+Updating
+"""
+for cur_m in range(1, minutes+1):
+    #  Refershing counts for this iteration
+    counts = {}
+    for key in range(-cur_m, cur_m + 1):
+        counts[key] = Grid(val=0)
+    #  Phase 1: collecting all the counts
+    for level in range(-cur_m, cur_m + 1):
+        #  updating counts[pos_lev]
+        #  basic counts (within each level)
+        counts[level] = levels[level].count_within()
+        print(counts[level])
+        #  add the counts from level - 1 (the level that contains this one)
+        #  outer gets affected
+        # @something
+        #  add the counts from level + 1 (the level that's within this one)
+        #  only four cells get affected
+        # @something
+    #  Phase 2: updating all based on counts
+    for level in range(-cur_m, cur_m + 1):
+        for r in range(const_dim):
+            for c in range(const_dim):
+                levels[level].update(counts[level])
+        
         
 
 
-def main():
-    """
-    minutes = 200
-    all_grids = {}
-    for i in range(2 * minutes + 1):
-        all_grids[i] = [ [0 for j in range(5)] for k in range(5)]
-    update_all_grids(all_grids, 200, 200)
-    exit()
-    """
-    minutes = 1
-    all_grids = {}
-    #  create an empty directory
-    for i in range(2 * minutes + 1):
-        all_grids[i] = [ [0 for j in range(5)] for k in range(5)]
-    print(len(all_grids))
-    #  set the input directory
-    input_grid = read_input('eg_input.txt')
-    all_grids[minutes] = input_grid
-    print("Initially, there are %d bugs"%sum_all(all_grids))
-    for i in all_grids:
-        visual_grid(all_grids[i])
-
-    #  Do the iteration
-    #  for minute = k, only change from all_grids[200-k] to all_grids[200+k]
-    prev_grids = all_grids.copy()
-    for m in range(1, minutes+1):
-        new_grids = update_all_grids(prev_grids, minutes, m)
-        prev_girds = new_grids.copy()
-        m_sum = sum_all(prev_grids)
-        print("After %d minutes, total number of bugs is %d"%(m, m_sum))
-
-    #  sum up all bugs
-    total_bug = sum_all(prev_grids)
-    print("Total number of bugs is %d"%total_bug)
-
-    print(len(prev_grids))
-    #  exit()
-    #  visualizing
-    for i in prev_grids:
-        print('Level %d:'%(i-minutes))
-        visual_grid(prev_grids[i])
-
-
-if __name__ == "__main__":
-    main()
+"""
+Count how many bugs we have in total
+"""
+all_bug = 0
+for key in range(-minutes, minutes+1):
+    bug_count = levels[key].sum_all()
+    all_bug += bug_count
+    print('level %d'%key)
+    print(levels[key])
+    print(bug_count)
+    print('')
+print('After %d mintues, having %d bugs'%(minutes, all_bug))
