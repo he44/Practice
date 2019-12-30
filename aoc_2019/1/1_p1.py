@@ -11,3 +11,4 @@ for line in lines:
     total_fuel += fuel
 
 print('Sum of the fuel requirements is %d'%total_fuel)
+
