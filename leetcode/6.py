@@ -6,24 +6,19 @@ class Solution:
         len_group = 2 * numRows - 2
         #  number of groups
         num_group = num_char // len_group + 1
-        print(num_group)
         #  fill in each group
-        groups = [["" for x in range(2 * numRows - 2)] for y in range(num_group)]
-        for gi in range(num_group):
-            for ci in range(len_group):
-                si = gi * len_group + ci
-                if si < num_char:
-                    groups[gi][ci] = s[si]
-        #print(groups)
-        #  convert from group to string
-        #  build this placeholder
+        #groups = [["" for x in range(2 * numRows - 2)] for y in range(num_group)]
         group_width = len_group - numRows + 1
         width = num_group * group_width
         height = numRows
         matrix = [["" for x in range(width)] for y in range(height)]
-        #  go over group and fill in matrix
         for gi in range(num_group):
             for ci in range(len_group):
+                si = gi * len_group + ci
+                """
+                if si < num_char:
+                    groups[gi][ci] = s[si]
+                """
                 row = 0
                 col = 0
                 if ci < numRows:
@@ -32,7 +27,16 @@ class Solution:
                 else:
                     row = 2 * numRows - ci -2
                     col = gi * group_width + (ci - numRows + 1)
-                matrix[row][col] = groups[gi][ci]
+                if si < num_char:
+                    matrix[row][col] = s[si]
+        #print(groups)
+        #  convert from group to string
+        #  build this placeholder
+        #  go over group and fill in matrix
+        """
+        for gi in range(num_group):
+            for ci in range(len_group):
+        """
         #  get row and col number from gi and ci
         #  row = ci if ci < numRows
         #  row = 2 * numRows - ci - 1 if ci >= numRows
@@ -48,12 +52,12 @@ class Solution:
 
 def main():
     s = Solution()
-    """
     input_str = "PAYPALISHIRING"
-    input_row = 4
+    input_row = 3
     """
     input_str = "AB"
     input_row = 1
+    """
     output_str = s.convert(input_str, input_row)
     print(output_str)
 
