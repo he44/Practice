@@ -1,33 +1,41 @@
+"""
+Problem 1310 XOR Queries of a Subarray
+# 5304 during contest
+
+Properties of XOR:
+
+a ^ a = 0
+0 ^ a = a
+a ^ a ^ b = 0 ^ b = b
+
+let a = arr[1] ^ ... arr[i-1] 
+let b = arr[i] ^ ... arr[j]
+a ^ a ^ b = (arr[1] ^ ... arr[i-1]) ^ (arr[1] ^ ... ^ arr[j]) = arr[i] ^ ... ^ arr[j]
+
+let p[i] = arr[0] ^ ... ^ arr[i]
+
+"""
+
+
 class Solution:
     #  Get an array storing partial results
     def xorQueries(self, arr, queries):
-        def recursion_xor(i, j):
-            #  Base case
-            if store[i][j] is not None:
-                return store[i][j]
-            if i == j:
-                return arr[i]
-            if i == j - 1:
-                return arr[i] ^ arr[j]
-            #  Recursoin
-            ans =  arr[i] ^ recursion_xor(i+1, j-1) ^ arr[j]
-            store[i][j] = ans
-            return ans
-        
-        total = len(arr)
-        #  store[i][j] denote arr[i] xor .... xor arr[j]
-        store = [[None for x in range(total)] for y in range(total)]
+        size = len(arr)
+        #  prefix xor
+        p = [0 for x in range(size)]
+        p[0] = arr[0]
+        for i in range(1, size):
+            p[i] = arr[i] ^ p[i-1]
+        print(p)
+        #  query
         output = []
-        #  go through queries
-        for pair in queries:
-            #  compute
-            if store[pair[0]][pair[1]] is not None:
-                output.append(store[pair[0]][pair[1]])
+        for l, r in queries:
+            if l == 0:
+                output.append(p[r])
             else:
-                ans = recursion_xor(pair[0], pair[1])
-                store[pair[0]][pair[1]] = ans
-                output.append(ans)
+                output.append(p[l-1] ^ p[r])
         return output
+            
                 
 
 def main():
