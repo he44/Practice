@@ -30,6 +30,16 @@ class Solution:
         if len(cc) == 1:
             return 0
 
+        #  we need number of cc
+        num_cc = len(cc) - 1 + cc[-1]
+        #  total edges - 
+        spare = len(connections) - (n - num_cc)
+
+        if spare >= num_cc - 1:
+            return num_cc - 1
+        else:
+            return -1
+
 
         # "redundant edges" in each connected componnet?
 
