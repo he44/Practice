@@ -1,49 +1,76 @@
+"""
+1319/5309. Number of Operations to Make Network Connected
+
+1. First get connceted component of this netwrok, via DFS
+
+
+Note:
+
+while looking at this problem, I had this concern:
+
+what if we remove this cable and cause the previously connceted part to become disconnected
+
+Notice how this case is actually covreed by "if len(connections) < n - 1"
+
+Assuming we have this connected component of k nodes, 
+
+if removing one edge disconnects them, that means there are only (k-1) edges in this cc originally (should be able to prove this)
+
+Now let's assume we have this k-node cc and another lonely node, 
+
+assuming adding one edge between lonely node and any other node will break the cc
+
+==> there are only (k-1) edges in the cc
+
+==> there are only (k-1) edges in the network, but (k+1) nodes, 
+
+==> covered by the if statement
+
+(Using induction, should be able to generalize this ?)
+
+"""
+
 class Solution:
     def makeConnected(self, n: int, connections) -> int:
-        #  Find all connected component
-        label = [-1 for x in range(n)]
-        used = 0
-        for edge in connections:
-            a, b = edge
-            if label[a] == -1 and label[b] == -1:
-                label[a] = used
-                label[b] = used
-                used += 1
-            elif label[b] == -1:
-                label[b] = label[a]
-            elif label[a] == -1:
-                label[a] = label[b]
-            else:
-                if label[a] != label[b]:
-                    to_replcae = label[a]
-                    for x in range(n):
-                        if label[x] == to_replcae:
-                            label[x] = label[b]
-        cc = {}
-        for label_val in label:
-            if label_val not in cc:
-                cc[label_val] = 1
-            else:
-                cc[label_val] += 1
-                
-        # simple case, all connected
-        if len(cc) == 1:
-            return 0
-
-        #  we need number of cc
-        num_cc = len(cc) - 1 + cc[-1]
-        #  total edges - 
-        spare = len(connections) - (n - num_cc)
-
-        if spare >= num_cc - 1:
-            return num_cc - 1
-        else:
+        #  simple case, not enough cables
+        if len(connections) < n - 1:
             return -1
 
+        #  Convert connections to adjacency list
+        neighbors = [ [] for x in range(n)]
+        for edge in connections:
+            u,v = edge
+            neighbors[u].append(v)
+            neighbors[v].append(u)
+        #print("Neighbors, ", neighbors)
 
-        # "redundant edges" in each connected componnet?
+        #  https://www.youtube.com/watch?v=xPO51Cn7gag
+        #  so smart
 
-        
+        #  set vs list (?) 
+        #  according to this link: https://stackoverflow.com/questions/2831212/python-sets-vs-lists#2831242 
+        #  it's faster to check if an item is in a set than to check if an item is in a list?
+        #  but set only allows unique objects
+        visited = set()
+
+        #  this way to find out number of connected components is so cool
+        def dfs(node):
+            if node in visited:
+                return 0
+            visited.add(node)
+            for neighbor in neighbors[node]:
+                dfs(neighbor)
+            return 1
+
+        nbComponents = 0
+        for i in range(n):
+            nbComponents += dfs(i)
+
+        #  now let's count cables
+        return nbComponents - 1
+
+
+            
                 
 
 def main():
