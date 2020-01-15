@@ -1,0 +1,73 @@
+* Permutation
+
+** Leetcode Problem 46
+
+** Leetcode Problem 47
+
+** Example walk-through (problem 47)
+
+- nums = [1, 1, 2]
+
+- backtrack(0, [1,1,2])
+
+  - k = 0
+    
+    - swapping k and last (0), nums = [1,1,2]
+      
+    - backtrack(1, [1,1,2])
+      
+      - k = 1
+	
+	- swapping k and last (1), nums = [1,1,2]
+	  
+	- backtrack(2, [1,1,2])
+	  
+	  - k = 2
+
+	    - swapping k and last (2), nums = [1,1,2]
+	      
+	    - backtrack(3, [1,1,2])
+	      
+	      - [1,1,2] added
+	
+      - k = 2
+
+	- swapping k and last (1), nums = [1,2,1]
+	  
+	- backtrack(2, [1,2,1])
+
+	  - k = 2
+
+	    - swapping k and last, nums = [1,2,1]
+
+	    - backtrack(3, [1,2,1])
+
+	      - [1,2,1] added
+
+  - k = 1
+    
+    - swapping k and last (0), nums = [2,1,1] from [1,2,1](?)
+      
+    - backtrack(2, [2,1,1])
+
+      - k = 2
+	
+	- swapping k and last, nums = [2,1,1]
+	  
+	- backtrack(3, [2,1,1])
+
+	  - [2,1,1] added
+
+  - k = 2
+    
+    - swapping k and last (0), nums = [1,1,2] from [2,1,1]
+
+    - backtrack(2, [1,1, 2])
+      
+      - k = 2
+
+	- swapping k and last, nums = [1,1,2]
+
+	- [1,2,2] added
+
+
