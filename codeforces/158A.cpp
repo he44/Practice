@@ -1,27 +1,31 @@
 #include <iostream>
 #include <vector>
-using namespace std;
+#include <algorithm>
 
 
 int main(){
     int n,k;
+    std::cin >> n;
+    std::cin >> k;
 
-    cin >> n;
-    cin >> k;
-    cout << n << endl;
-    cout << k << endl;
-    return 0;
-    vector<int> scores;
+    std::vector<int> scores;
     int score;
-    for (int i = 0; i <= n; ++i){
-        cin >> score;
+    for (int i = 0; i < n; ++i){
+        std::cin >> score;
         scores.push_back(score);
     }
-    sort(scores.begin(), scores.end());
-    /*
-    for (auto & i:scores){
-        cout << i << endl;
+
+    std::sort(scores.begin(), scores.end(), std::greater<>());
+    
+    int count = 0;
+    int thres = scores[k-1];
+    for (int i = 0; i < n; ++i){
+        if (scores[i] <= 0 || scores[i] < thres){
+            break;
+        }
+        count += 1;
     }
-    */
+
+    std::cout << count << std::endl;
     return 0;
 }
