@@ -3,21 +3,15 @@ from typing import *
 
 class Solution:
     def maxArea(self, h: int, w: int, horizontalCuts: List[int], verticalCuts: List[int]) -> int:
-        hmin = float('inf')
-        hmax = 0
-        wmin = float('inf')
-        wmax = 0
-        for hc in horizontalCuts:
-            hmin = min(hmin, hc)
-            hmax = max(hmax, hc)
-        for wc in verticalCuts:
-            wmin = min(wmin, wc)
-            wmax = max(wmax, wc)
-        hh = max(hmax - 0, h - hmin, hmax - hmin)
-        ww = max(wmax - 0, w - wmin, wmax - wmin)
-        print(hmax, hmin, wmax, wmin)
-        print(hh, ww)
-        return int((hh * ww) % (1e9+7))
+        horizontalCuts.sort()
+        verticalCuts.sort()
+        hmax = max(horizontalCuts[0], h - horizontalCuts[-1])
+        wmax = max(verticalCuts[0], w - verticalCuts[-1])
+        for hi in range(1, len(horizontalCuts)):
+            hmax = max(hmax, horizontalCuts[hi] - horizontalCuts[hi-1])
+        for wi in range(1, len(verticalCuts)):
+            wmax = max(wmax, verticalCuts[wi] - verticalCuts[wi-1])
+        return int((hmax * wmax) % (1e9+7))
 
 
 
@@ -25,7 +19,8 @@ s = Solution()
 cases = [
     [5, 4, [1,2,4], [1,3]],
     [5, 4, [3,1], [1]],
-    [5, 4, [3], [3]]
+    [5, 4, [3], [3]],
+    [5, 2, [3,1,2], [1]]
 ]
 
 for h, w, hcs, vcs in cases:
