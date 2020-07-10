@@ -22,13 +22,44 @@ class Solution:
                 seen[val2] = i
         return res
 
+    def threeSum_from2sum(self, nums: List[int]) -> List[List[int]]:
+        def twoSum(nums, target):
+            # since this is already sorted, we can do binary search?
+            lo = 0
+            hi = len(nums)-1
+            res = []
+            while lo < hi:
+                tmp = nums[lo] + nums[hi]
+                if tmp < target or (lo > 0 and nums[lo] == nums[lo - 1]):
+                    lo += 1
+                elif tmp > target or (hi < len(nums) - 1 and nums[hi] == nums[hi + 1]):
+                    hi -= 1
+                # need to check duplicate first
+                else:
+                    res.append([-target, nums[lo], nums[hi]])
+                    lo += 1
+                    hi -= 1
+
+            return res
+
+        # sort the list
+        nums.sort()
+        # go through each num
+        res = []
+        for i in range(len(nums)):
+            if nums[i] > 0:
+                break
+            if i == 0 or nums[i] != nums[i-1]:
+                res += twoSum(nums[i+1:], -nums[i])
+        return res
 
 cases = [
-    [-1, 0, 1, 2, -1, -4]
+    [-1, 0, 1, 2, -1, -4],
+    [-2, 0, 3, -1, 4, 0, 3, 4, 1, 1, 1, -3, -5, 4, 0]
 ]
 
 sol = Solution()
 for case in cases:
-    print(sol.threeSum(case))
+    print(sol.threeSum_from2sum(case))
 
 
