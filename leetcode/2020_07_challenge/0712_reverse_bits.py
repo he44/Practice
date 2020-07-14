@@ -4,14 +4,18 @@ class Solution:
     def reverseBits(self, n: int) -> int:
         bin_pattern = bin(n)[2:]
         print(bin_pattern)
-        for bit in bin_pattern[::-1]:
-            print(bit)
+        res = 0
+        i = 32 - len(bin_pattern)
+        for bit in bin_pattern:
+            if bit == "1":
+                res += (2 ** i)
+            i += 1
+        return res
 
 
 
 cases = [
-    12,
-    13
+    43261596
 ]
 
 
