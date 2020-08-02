@@ -1,0 +1,26 @@
+{
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "C/C++: cl.exe build active file",
+			"command": ".\\codeforces\\build.bat ${fileDirname}\\${fileBasenameNoExtension}",
+			// "args": [
+			// 	"/Zi",
+			// 	"/EHsc",
+			// 	"/Fe:",
+			// 	"${fileDirname}\\${fileBasenameNoExtension}.exe",
+			// 	"${file}"
+			// ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
