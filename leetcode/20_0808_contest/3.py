@@ -44,6 +44,31 @@ class Solution:
                 
         # TLE
 
+    def maxNonOverlapping_test(self, nums: List[int], target: int) -> int:
+        intervals = []
+        ps = {}
+        prefix_sum = 0 
+        n = len(nums)
+        es = 0
+        count = 0
+        for i in range(-1, n):
+            if i == -1:
+                ps[prefix_sum] = [-1]
+                continue
+
+            prefix_sum += nums[i]
+
+            if prefix_sum in ps:
+                ps[prefix_sum].append(i)
+            else:
+                ps[prefix_sum] = [i]
+
+            start_sum = prefix_sum - target
+            if start_sum in ps:
+                if max(ps[start_sum]) >= es:
+                    count += 1
+                    es = i + 1 
+        return count
 
 
 
@@ -57,7 +82,7 @@ cases = [
 
 sol = Solution()
 for nums, target in cases:
-    print(sol.maxNonOverlapping(nums, target))
+    print(sol.maxNonOverlapping_test(nums, target))
 
 
 
