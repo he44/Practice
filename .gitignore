@@ -3,3 +3,4 @@
 */test_ground/*
 *.out
 */.vs/*
+*.ipynb_checkpoints
