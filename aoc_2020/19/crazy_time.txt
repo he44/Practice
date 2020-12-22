@@ -1,0 +1,5 @@
+Running on the first part,
+
+p1.py (my regex implementation) took 192.51189837599998 seconds
+p2.py (recursion following geohot (https://www.youtube.com/watch?v=OxDp11u-GUo) took 0.9566603020000001 seconds
+

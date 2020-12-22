@@ -1,4 +1,7 @@
+from time import perf_counter as pc
+tic = pc()
 import re
+
 
 # mapping from index to regex object
 rules = dict()
@@ -109,3 +112,5 @@ for line in lines:
         if res and res.end() - res.start() == len(message):
             ans += 1
 print(ans)
+toc = pc()
+print("Taking {} seconds".format(toc - tic))
