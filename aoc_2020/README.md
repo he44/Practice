@@ -18,6 +18,10 @@
 
 - strings. ```string.hexdigits``` and ```string.digits``` came in handy.
 
+## Day 5
+
+- Binary search
+
 ## Day 14
 
 - strings
