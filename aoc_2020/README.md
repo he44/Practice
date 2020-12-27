@@ -34,6 +34,10 @@
 
 - part 2 (I think) can be done with level-based BFS (written in an iterative fashion), so that we can multiply the number of bags over. I ended up writing the recursion though.
 
+## Day 8
+
+- set
+
 ## Day 14
 
 - strings
