@@ -38,6 +38,10 @@
 
 - set
 
+## Day 9
+
+- dp maybe? sliding window?
+
 ## Day 14
 
 - strings
