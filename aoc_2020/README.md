@@ -26,6 +26,14 @@
 
 - set operation: union (```|```) and intersection (```&```)
 
+## Day 7
+
+- Graph
+
+- part 1 is easy, writing a DFS in iterative fashion
+
+- part 2 (I think) can be done with level-based BFS (written in an iterative fashion), so that we can multiply the number of bags over. I ended up writing the recursion though.
+
 ## Day 14
 
 - strings
