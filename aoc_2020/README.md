@@ -22,6 +22,10 @@
 
 - Binary search
 
+## Day 6
+
+- set operation: union (```|```) and intersection (```&```)
+
 ## Day 14
 
 - strings
