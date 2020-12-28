@@ -52,6 +52,12 @@
 
 - array
 
+## Day 12
+
+- coordinate system
+
+- geometry?
+
 ## Day 14
 
 - strings
