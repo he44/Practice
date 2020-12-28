@@ -48,6 +48,10 @@
 
 - Learnt from [this YouTube Video](https://www.youtube.com/watch?v=cE88K2kFZn0) and rewrote the thing in DP
 
+## Day 11
+
+- array
+
 ## Day 14
 
 - strings
