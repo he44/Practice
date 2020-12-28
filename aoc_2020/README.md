@@ -42,6 +42,12 @@
 
 - dp maybe? sliding window?
 
+## Day 10
+
+- Tried using backtracking but took forever on the actual input
+
+- Learnt from [this YouTube Video](https://www.youtube.com/watch?v=cE88K2kFZn0) and rewrote the thing in DP
+
 ## Day 14
 
 - strings
