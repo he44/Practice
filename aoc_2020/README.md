@@ -58,6 +58,18 @@
 
 - geometry?
 
+## Day 13
+
+- made a mistake on [operator precedence](https://docs.python.org/3/reference/expressions.html#operator-precedence)
+
+- naive iteration won't solve part 2 in time...
+
+- something about prime numbers and remainder theorem, learnt from [this YouTube Video](https://www.youtube.com/watch?v=x40aLK9KjYQ)
+
+- Okay it's something I came across a long long time ago. Shame on myself.
+
+- There's a section titled "Chinese remainder theorem" on competitive programming handbook
+
 ## Day 14
 
 - strings
