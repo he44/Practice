@@ -90,6 +90,22 @@
 
 - Multi-dimensional array. Feels like one problem from last year.
 
+## Day 18
+
+- parser? Maybe I can write a stack and evaluate them in order?
+
+- [George Hotz's solution](https://www.youtube.com/watch?v=OxDp11u-GUo) was really cool, blew my mind
+
+    - try this "abusive Python solution" first
+
+    - [eval function](https://docs.python.org/3/library/functions.html#eval)
+
+    - implement two dunder methods
+
+    - use [regex](https://docs.python.org/3/library/re.html#re.sub) to insert the cutsom class
+
+- [Anthonywritescode's solution](https://www.youtube.com/watch?v=2Xyg6Zjv2PM) using regular expression to handle the nested parenthesis is very cool as well
+
 ## Day 19
 
 - Regular expression / context free grammar?
