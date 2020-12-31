@@ -120,6 +120,38 @@
 
     - yeah it is that simple. I overthought
 
+- part 2 seems really complicated
+
+    - we start with an arbitrary corner tile and set it as top left
+
+        - must ensure the two boarders with count 1 are facing top and left
+
+    - we start building in RMO order
+
+        - check left neighbor requirement
+
+        - check top neighbor requirement
+
+        - if one of the neighbor is missing, this tile must be "edge tile", 4 boarder count sums up to 6 (1,1,2,2) and 7 (1,2,2,2)
+
+    - after fixing the order, we can collage the strings together
+
+        - it's easier to strip boarders on individual ones first
+
+    - for the big collage (I call "image"), I wrote similar functions as for tile to iterate all possible flip and rotations until we start seeing sea monsters
+
+        - the enumeartion of transform is as followed:
+
+            - rotation (3  + 1 times)
+
+            - flip (left and right) and then rotation ( 3 + 1 times)
+
+    - for the pattern matching part, I used the idea from [John Paulson](https://github.com/anthonywritescode/aoc2020/tree/master/day20)
+
+        - I really need to get more familiar with the Python regex API
+
+- This is the last start I need for AOC 2020.
+
 ## Day 21
 
 - ["aha moment"](https://www.youtube.com/watch?v=5TOgCuSsfZg)
