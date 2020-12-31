@@ -120,6 +120,10 @@
 
     - yeah it is that simple. I overthought
 
+## Day 21
+
+- ["aha moment"](https://www.youtube.com/watch?v=5TOgCuSsfZg)
+
 ## Day 22
 
 - normal array operation
