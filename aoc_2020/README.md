@@ -114,9 +114,23 @@
 
 - Watched [GeoHots' stream](https://www.youtube.com/watch?v=OxDp11u-GUo) to learn part 2
 
+## Day 20
+
+- part 1 might be really simple? I only need to find tiles whose boarders appear (1, 1, 2, 2) times. These will be the corner tiles
+
+    - yeah it is that simple. I overthought
+
+## Day 22
+
+- normal array operation
+
+- I got stuck on part 2 for probably 2, 3 hours. I was able to get the correct answer for the example case quickly but got "guess too large" on the actual input.
+
 ## Day 23
 
 - Linked list. I implememnted using array and the run time is crazy. Still feeling very stupid on this one.
+
+- Checked Youtube video [1](https://www.youtube.com/watch?v=Um2LI6EgfjA) and [2](https://www.youtube.com/watch?v=iD4R7wSNrdw) and their corresponding git repos. Re-factored the code a bit. And got the final answer correct.
 
 ## Day 24
 
