@@ -138,4 +138,7 @@
 
 - Learnt from [twitch stream of anthonywritescode](https://www.twitch.tv/videos/848239372) on how to handle this type of "infinitely expanding problem"
 
+## Day 25
+
+- the use of ```pow()``` function in Python. It's fast. [Why?](https://stackoverflow.com/questions/14133806/why-is-powa-d-n-so-much-faster-than-ad-n)
 
