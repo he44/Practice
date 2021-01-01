@@ -132,9 +132,11 @@
 
         - check top neighbor requirement
 
-        - if one of the neighbor is missing, this tile must be "edge tile", 4 boarder count sums up to 6 (1,1,2,2) and 7 (1,2,2,2)
+        - if one of the neighbor is missing, this tile must be "edge tile", 4 boarder count sums up to 6 (1,1,2,2) or 7 (1,2,2,2)
 
-    - after fixing the order, we can collage the strings together
+    - we can be chill about the initial choice because we can apply rotation/flipping later
+
+    - after solving the arrangement, we can collage the strings together
 
         - it's easier to strip boarders on individual ones first
 
